@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Console Tricks!</title>
+</head>
+<body>
+
+  <p onClick="makeGreen()">×BREAK×DOWN×</p>
+
+  <script>
+    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+
+    function makeGreen() {
+      const p = document.querySelector('p');
+      p.style.color = '#BADA55';
+      p.style.fontSize = '50px';
+    }
+
+    // Regular
+    console.log('hello')
+
+    // Interpolated
+    console.log('I am the %s string', 'Interpolated')
+
+    // Styled
+    console.log('%c I am the styled string', 'font-size: 50px; color: white; text-shadow: 2px 2px 5px black; text-align:center;')
+
+    // warning!
+    console.warn('This is a warning')
+
+    // Error :|
+    console.error('This is an error!!!')
+
+    // Info
+    console.info('Hey! you know, this is an informative message.')
+
+    // Testing
+    const p = document.querySelector('p');
+    console.assert(p.classList.contains('ouch'), 'There is no such class!')
+
+    // clearing
+    // console.clear()
+
+    // Viewing DOM Elements
+    console.dir(p)
+
+    // Grouping together
+    dogs.forEach(dog => {
+      console.groupCollapsed(`${dog.name}`);
+      console.log(`${dog.name} is ${dog.age} years old`);
+      console.log(`${dog.name} is ${dog.age *7} dog years old`);
+      console.groupEnd(`${dog.name}`)
+    })
+
+    // counting
+    console.count('Arpan')
+    console.count('Arpan')
+    console.count('codes')
+    console.count('Arpan')
+    console.count('codes')
+    console.count('Arpan')
+
+    // timing
+    console.time('Fetching Data');
+    fetch('https://api.github.com/users/arpancodes')
+          .then(data=> data.json())
+          .then(data => {
+            console.timeEnd('Fetching Data')
+            console.log(data)
+          })
+
+  </script>
+</body>
+</html>

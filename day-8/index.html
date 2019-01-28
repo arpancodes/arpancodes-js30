@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+  <style type="text/css">
+  	canvas{
+  		border: 5px solid black;
+
+  	}
+  </style>
+</head>
+<body>
+	<center>
+		<label>
+		Brush Size: 
+		<input type="range" min="1" max="100" value="50" id="brush-size" >
+		</label>
+		<label>
+			Brush Color
+			<input type="color" value="#BADA55"  id="brush-color" >
+		</label>
+	</center>
+	
+<canvas id="draw" width="800" height="800"></canvas>
+<script>
+	const canvas = document.querySelector('#draw')
+	const size = document.querySelector('#brush-size')
+	const color = document.querySelector('#brush-color')
+	const ctx = canvas.getContext('2d')
+	canvas.width = window.innerWidth
+	canvas.height = window.innerHeight
+	ctx.strokeStyle = color.value
+	ctx.lineJoin = 'round'
+	ctx.lineCap = 'round';
+	ctx.lineWidth = size.value
+
+	let isDrawing = false
+	let lastX = 0;
+	let lastY = 0;
+
+
+	function draw(e){
+		if (!isDrawing) return;
+		ctx.beginPath()
+		ctx.moveTo(lastX, lastY);
+		ctx.lineTo(e.offsetX, e.offsetY);
+		ctx.stroke();
+		[lastX, lastY] = [e.offsetX, e.offsetY]
+		console.log(e)
+	}
+	function handleSizeUpdate(e){
+		ctx.lineWidth = size.value;
+	}
+	function handlecolorUpdate(e){
+		ctx.strokeStyle = color.value;
+	}
+
+	canvas.addEventListener('mousedown', (e) => {
+		isDrawing = true;
+		[lastX, lastY] = [e.offsetX, e.offsetY];
+	});
+	canvas.addEventListener('mousemove', draw)
+	canvas.addEventListener('mouseup',() => isDrawing = false)
+	canvas.addEventListener('mouseout',() => isDrawing = false)
+	size.addEventListener('change', handleSizeUpdate);
+	color.addEventListener('change', handlecolorUpdate);
+
+</script>
+<style>
+  html, body {
+    margin: 0;
+  }
+</style>
+
+</body>
+</html>
